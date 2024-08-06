@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <title>Love Proposal</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #090d00, #1c1c1c);
+      text-align: center;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .dialogue-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 10;
+    }
+
+    .dialogue-box button {
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+      text-transform: capitalize;
+      background: red;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 300ms;
+    }
+
+    .dialogue-box button:hover {
+      background-color: darkred;
+    }
+
+    .main-content, .accept-content {
+      display: none;
+    }
+
+    img {
+      height: 250px;
+      justify-content: center;
+      align-items: center;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 50px;
+    }
+
+    #text {
+      font-size: 25px;
+      color: white;
+      margin-top: 0;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    button {
+      font-size: 25px;
+      font-weight: bold;
+      color: white;
+      text-transform: capitalize;
+      background: red;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      margin: 0 20px;
+      transition: transform 300ms, background-color 300ms;
+      cursor: pointer;
+      position: relative;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      background-color: darkred;
+    }
+
+    @keyframes float {
+      0% { transform: translatey(0px); }
+      50% { transform: translatey(-20px); }
+      100% { transform: translatey(0px); }
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .fade-in {
+      animation: fadeIn 2s ease-in forwards;
+    }
+
+    #yes-count {
+      font-size: 20px;
+      color: white;
+      margin-top: 20px;
+    }
+    #accept-text{
+color:white;
+font-size:1rem;
+}
+  </style>
+</head>
+<body>
+  <div class="dialogue-box" id="dialogue-box">
+    <button onclick="playMusic()">Play Music</button>
+  </div>
+  <div class="main-content" id="main-content">
+    <section class="img">
+      <img src="Love.png" alt="Love Image">
+    </section>
+    <div class="btn-container" id="btn">
+      <button onclick="acceptProposal()">Yes, I am</button>
+      <button id="myButton">No</button>
+    </div>
+    <div class="container">
+      <p id="text" class="fade-in"></p>
+      <p id="yes-count"></p>
+    </div>
+  </div>
+
+  <div class="accept-content" id="accept-content">
+    <section class="img">
+      <img src="love1.png" alt="">
+      <h1 style="color:white; text-style:bold;">"I Love You ❤️"</h1>
+    </section>
+    <div class="container">
+      <p id="accept-text"></p>
+    </div>
+  </div>
+
+  <footer><br></footer>
+
+  <audio id="background-music" src="merijan.mp3" loop></audio>
+
+  <script>
+    let yesCount = 0;
+
+    function acceptProposal() {
+      yesCount++;
+      document.getElementById("yes-count").innerText = "Yes Count: " + yesCount;
+
+      // Hide main content
+      document.getElementById("main-content").style.display = 'none';
+      
+      // Show acceptance content
+      document.getElementById("accept-content").style.display = 'block';
+      
+      // Start typing animation for acceptance content
+      autoTypeAcceptance();
+    }
+
+    function playMusic() {
+      const music = document.getElementById("background-music");
+      music.play();
+      document.getElementById("dialogue-box").style.display = 'none';
+      document.getElementById("main-content").style.display = 'block';
+      autoType();
+    }
+
+    const text = document.querySelector('#text');
+    const btn = document.querySelector('#btn');
+    const str = '"From the moment I met you, I knew you were the one for me. Will you do me the honor of being my partner for life?"';
+    let i = 0;
+
+    function autoType() {
+      if (i < str.length) {
+        text.innerHTML += str.charAt(i);
+        i++;
+        setTimeout(autoType, 100);
+      } else {
+        btn.style.display = 'flex';
+        btn.classList.add('fade-in');
+      }
+    }
+
+    const acceptText = document.querySelector('#accept-text');
+    const acceptanceStr = '"Thank you for making me the happiest person in the world by accepting my proposal. I cannot wait to start the new journey together and build a lifetime of memories."';
+    let j = 0;
+
+    function autoTypeAcceptance() {
+      if (j < acceptanceStr.length) {
+        acceptText.innerHTML += acceptanceStr.charAt(j);
+        j++;
+        setTimeout(autoTypeAcceptance, 100);
+      }
+    }
+
+    const button = document.querySelector("#myButton");
+    button.addEventListener("mouseover", function() {
+      const x = Math.floor(Math.random() * window.innerWidth);
+      const y = Math.floor(Math.random() * window.innerHeight);
+      button.style.left = x + "px";
+      button.style.top = y + "px";
+    });
+  </script>
+</body>
+</html>
